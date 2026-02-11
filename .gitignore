@@ -39,3 +39,63 @@
 
 # debug information files
 *.dwo
+
+############################
+# Visual Studio
+############################
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio cache/options
+.vs/
+
+############################
+# Build output
+############################
+
+# MSBuild folders
+Debug/
+Release/
+x64/
+x86/
+build/
+out/
+
+# CMake (якщо раптом колись буде)
+CMakeFiles/
+CMakeCache.txt
+
+############################
+# Compiled binaries
+############################
+
+*.exe
+*.dll
+*.lib
+*.obj
+*.pdb
+*.ilk
+
+############################
+# Logs
+############################
+
+*.log
+
+############################
+# Temporary files
+############################
+
+*.tmp
+*.temp
+
+############################
+# OS files
+############################
+
+.DS_Store
+Thumbs.db
