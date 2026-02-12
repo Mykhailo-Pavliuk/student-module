@@ -1,0 +1,20 @@
+#!/bin/sh
+# Blocks commits if branch or message do not follow SP-<number> conventions.
+
+# Allow merge commits to pass through untouched
+if git rev-parse --verify MERGE_HEAD >/dev/null 2>&1; then
+  exit 0
+fi
+
+BRANCH="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+if ! printf "%s" "$BRANCH" | grep -Eq '^SP-[0-9]+$'; then
+  echo "Branch name must match SP-<number> (e.g., SP-12). Current: $BRANCH" >&2
+  exit 1
+fi
+
+MSG_FILE="$1"
+MSG="$(head -n1 "$MSG_FILE")"
+if ! printf "%s" "$MSG" | grep -Eq '^\[SP-[0-9]+\] .+'; then
+  echo "Commit message must start with [SP-<number>] Description" >&2
+  exit 1
+fi
