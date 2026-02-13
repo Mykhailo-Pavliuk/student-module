@@ -16,37 +16,32 @@ public:
 	}
 
 	string getName(){
-	return name;
+		return name;
 	}
+
 	string getSurname() {
 		return surname;
 	}
+
 	int getAge() {
 		return age;
 	}
+
 	int getCourse() {
-	return course;
+		return course;
 	}
 
-	void ollInf() {
+	void print() {
 		cout << "Name: " << name << endl;
 		cout << "Surname: " << surname << endl;
 		cout << "Age: " << age << " years old" << endl;
 		cout << "Course: " << course << endl;
 	}
-
-
-
 };
 
 int main() {
-
-	Student inf("Nastya", "Pavliuk", 19, 1);
-	inf.ollInf();
-	/*cout << " Name of student is: " << inf.getName() << endl;
-	cout << " Surname of student is: " << inf.getSurname() << endl;
-	cout << " Student age is: " << inf.getAge() << " years old" << endl;
-	cout << " The course is: " << inf.getCourse() << endl;*/
+	Student student("Nastya", "Pavliuk", 19, 1);
+	student.print();
 	
 	return 0;
 }
