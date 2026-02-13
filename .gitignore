@@ -52,6 +52,18 @@
 
 # Visual Studio cache/options
 .vs/
+ipch/
+*.VC.db
+*.VC.opendb
+*.opendb
+*.opensdf
+*.sdf
+*.cache
+
+############################
+# IDE helpers
+############################
+.vscode/
 
 ############################
 # Build output
@@ -64,6 +76,8 @@ x64/
 x86/
 build/
 out/
+bin/
+[Bb]uild*/
 
 # CMake (якщо раптом колись буде)
 CMakeFiles/

@@ -1,0 +1,86 @@
+name: PR Quality Gate
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+
+jobs:
+  conventions:
+    name: Branch & commit conventions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch naming
+        env:
+          BRANCH: ${{ github.head_ref }}
+        run: |
+          if [[ -z "$BRANCH" ]]; then
+            echo "Unable to detect branch name for this pull request."
+            exit 1
+          fi
+          if [[ ! "$BRANCH" =~ ^SP-[0-9]+$ ]]; then
+            echo "Branch '$BRANCH' must follow the pattern SP-<number> (e.g., SP-9)."
+            exit 1
+          fi
+
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - name: Fetch base branch
+        run: git fetch origin ${{ github.event.pull_request.base.ref }}:${{ github.event.pull_request.base.ref }}
+
+      - name: Validate commit messages
+        run: |
+          COMMITS=$(git log --format=%s origin/${{ github.event.pull_request.base.ref }}..HEAD)
+          if [ -z "$COMMITS" ]; then
+            echo "No commits found between base and head."
+            exit 1
+          fi
+          BAD=$(echo "$COMMITS" | grep -Ev '^\[SP-[0-9]+\] .+' || true)
+          if [ -n "$BAD" ]; then
+            echo "The following commit messages violate the format [SP-123] Description:"
+            echo "$BAD"
+            exit 1
+          fi
+
+  build:
+    name: Build all Visual Studio projects
+    runs-on: windows-latest
+    needs: conventions
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Build every solution or project
+        shell: pwsh
+        run: |
+          $solutions = Get-ChildItem -Path . -Recurse -Filter *.sln
+          $projects  = Get-ChildItem -Path . -Recurse -Filter *.vcxproj
+
+          if ($solutions.Count -eq 0 -and $projects.Count -eq 0) {
+            Write-Error "No .sln or .vcxproj files found to build."
+            exit 1
+          }
+
+          if ($solutions.Count -gt 0) {
+            foreach ($sln in $solutions) {
+              Write-Host "Building solution $($sln.FullName)"
+              msbuild $sln.FullName /p:Configuration=Release /m
+              if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            }
+          }
+
+          if ($solutions.Count -eq 0 -and $projects.Count -gt 0) {
+            foreach ($proj in $projects) {
+              Write-Host "Building project $($proj.FullName)"
+              msbuild $proj.FullName /p:Configuration=Release /m
+              if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            }
+          }
