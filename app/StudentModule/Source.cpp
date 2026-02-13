@@ -29,7 +29,7 @@ private:
 	}
 
 	void setAge(int age) {
-		if (age >=18 && age <= 120) {
+		if (age >= 18 && age <= 120) {
 			this->age = age;
 		}
 		else {
