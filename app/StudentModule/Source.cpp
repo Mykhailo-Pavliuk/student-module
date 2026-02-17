@@ -72,21 +72,26 @@ public:
 	}
 
 	void print() {
+		cout << "-----------------" << endl;
 		cout << "Name: " << name << endl;
 		cout << "Surname: " << surname << endl;
-		if (age == 1) {
-			cout << "Age: " << age << " year old" << endl;
-		}
-		else {
-			cout << "Age: " << age << " years old" << endl;
-		}
+		cout << "Age: " << age << " years old" << endl;
 		cout << "Course: " << course << endl;
 	}
 };
 
 int main() {
-	Student student("Nastya", "Pavliuk", 19, 1);
-	student.print();
+	Student student1("Nastya", "Pavliuk", 19, 1);
+	student1.print();
+
+	Student student2("Mishka", "Pavliuk", 24, 5);
+	student2.print();
+
+	Student student3("Oleg", "Lukianov", 25, 5);
+	student3.print();
+
+	Student student4("Vitalina", "Lukianova", 18, 1);
+	student4.print();
 
 	return 0;
 }
