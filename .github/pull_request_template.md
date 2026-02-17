@@ -16,5 +16,5 @@
 
 ## Checklist
 - [ ] Branch name follows `SP-<number>` (e.g., SP-9)
-- [ ] Each commit message follows `[SP-<number>] Description`
+- [ ] Each commit message follows `SP-<number>: Description`
 - [ ] Updated docs/README if behavior changed
