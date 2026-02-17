@@ -80,6 +80,19 @@ public:
 	}
 };
 
+class StudentRepository {
+private:
+	Student* students;
+	int size;
+public:
+	void printAllStudents() {
+		for (int i = 0;i < 4;i++) {
+			students[i].print();
+		}
+	}
+
+};
+
 int main() {
 
 	Student students[4]{
@@ -88,8 +101,8 @@ int main() {
 		Student("Oleg", "Lukianov", 25, 5),
 		Student("Vitalina", "Lukianova", 18, 1)
 	};
-	for (int i = 0;i < 4;i++) {
+	/*for (int i = 0;i < 4;i++) {
 		students[i].print();
-	}
+	}*/
 	return 0;
 }
