@@ -38,9 +38,9 @@ jobs:
             echo "No commits found between base and head."
             exit 1
           fi
-          BAD=$(echo "$COMMITS" | grep -Ev '^\[SP-[0-9]+\] .+' || true)
+          BAD=$(echo "$COMMITS" | grep -Ev '^SP-[0-9]+: .+' || true)
           if [ -n "$BAD" ]; then
-            echo "The following commit messages violate the format [SP-123] Description:"
+            echo "The following commit messages violate the format SP-123: Description:"
             echo "$BAD"
             exit 1
           fi
