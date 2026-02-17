@@ -81,17 +81,15 @@ public:
 };
 
 int main() {
-	Student student1("Nastya", "Pavliuk", 19, 1);
-	student1.print();
 
-	Student student2("Mishka", "Pavliuk", 24, 5);
-	student2.print();
-
-	Student student3("Oleg", "Lukianov", 25, 5);
-	student3.print();
-
-	Student student4("Vitalina", "Lukianova", 18, 1);
-	student4.print();
-
+	Student students[4]{
+		Student("Nastya", "Pavliuk", 19, 1),
+		Student("Mishka", "Pavliuk", 24, 5),
+		Student("Oleg", "Lukianov", 25, 5),
+		Student("Vitalina", "Lukianova", 18, 1)
+	};
+	for (int i = 0;i < 4;i++) {
+		students[i].print();
+	}
 	return 0;
 }
