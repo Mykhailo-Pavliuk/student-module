@@ -55,6 +55,8 @@ public:
 		setCourse(course);
 	}
 
+	Student() {}
+
 	string getName() {
 		return name;
 	}
@@ -72,11 +74,11 @@ public:
 	}
 
 	void print() {
-		cout << "-----------------" << endl;
 		cout << "Name: " << name << endl;
 		cout << "Surname: " << surname << endl;
 		cout << "Age: " << age << " years old" << endl;
 		cout << "Course: " << course << endl;
+		cout << "-----------------" << endl;
 	}
 };
 
@@ -91,11 +93,21 @@ public:
 	};
 
 	void printAllStudents() {
+		cout << "\n===== STUDENTS LIST =====\n" << endl;
 		for (int i = 0;i < size;i++) {
-			students[i].print();
+			students[i].print(); 
 		}
 	}
 
+	void addStudent(Student student) {
+		Student* newStudents = new Student[size + 1];
+		for (int i = 0;i < size;i++) {
+			newStudents[i] = students[i];
+		}
+		newStudents[size] = student;
+		students = newStudents;
+		size++;
+	}
 };
 
 int main() {
@@ -109,6 +121,8 @@ int main() {
 
 	StudentRepository repository(students, 4);
 	repository.printAllStudents();
-	
+	repository.addStudent(Student("Liza", "Tumoshko", 17, 5));
+	repository.printAllStudents();
+
 	return 0;
 }
