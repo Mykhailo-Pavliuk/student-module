@@ -91,11 +91,18 @@ public:
 		this->students = students;
 		this->size = size;
 	};
-
+	
 	void printAllStudents() {
+		if (size == 0) {
+			cout << "No students found." << endl;
+			return;
+		}
+
 		cout << "\n===== STUDENTS LIST =====\n" << endl;
+
 		for (int i = 0;i < size;i++) {
-			students[i].print(); 
+			cout << i + 1 << ".";
+			students[i].print();
 		}
 	}
 
