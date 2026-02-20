@@ -93,12 +93,12 @@ public:
 	};
 	
 	void printAllStudents() {
+		cout << "\n===== STUDENTS LIST =====\n" << endl;
+
 		if (size == 0) {
 			cout << "No students found." << endl;
 			return;
 		}
-
-		cout << "\n===== STUDENTS LIST =====\n" << endl;
 
 		for (int i = 0;i < size;i++) {
 			cout << i + 1 << ".";
