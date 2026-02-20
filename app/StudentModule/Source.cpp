@@ -131,5 +131,28 @@ int main() {
 	repository.addStudent(Student("Liza", "Tumoshko", 17, 5));
 	repository.printAllStudents();
 
+	int command;
+	while (true) {
+		cout << "--------------------" << endl;
+		cout << "1 - " << "Add student" << endl;
+		cout << "2 - " << "Print all students" << endl;
+		cout << "0 - " << "Exit" << endl;
+		cin >> command;
+		cout << "--------------------" << endl;
+
+		if (command == 1) {
+			repository.addStudent(Student("Bodia", "Laushkin", 18, 1));
+			cout << "Student added!" << endl;
+		}
+		else if (command == 2) {
+			repository.printAllStudents();
+		}
+		else if (command == 0) {
+			break; 
+		}
+		else {
+			cout << "Invalid option!" << endl;
+		}
+	}
 	return 0;
 }
