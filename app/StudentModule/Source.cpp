@@ -141,8 +141,22 @@ int main() {
 		cout << "--------------------" << endl;
 
 		if (command == 1) {
-			repository.addStudent(Student("Bodia", "Laushkin", 18, 1));
-			cout << "Student added!" << endl;
+			string name;
+			string surname;
+			int age;
+			int course;
+
+			cout << "Enter student name: " << endl;
+			cin >> name;
+			cout << "Enter student surname: " << endl;
+			cin >> surname;
+			cout << "Enter student age: " << endl;
+			cin >> age;
+			cout << "Enter course: " << endl;
+			cin >> course;
+
+			Student newStudent(name, surname, age, course);
+			repository.addStudent(newStudent);
 		}
 		else if (command == 2) {
 			repository.printAllStudents();
