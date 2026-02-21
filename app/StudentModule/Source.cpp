@@ -87,6 +87,10 @@ private:
 	Student* students;
 	int size;
 public:
+	StudentRepository() {
+		this->students = {};
+		size=0;
+	}
 	StudentRepository(Student* students, int size) {
 		this->students = students;
 		this->size = size;
@@ -117,56 +121,59 @@ public:
 	}
 };
 
-int main() {
+class TerminalUI {
+private:
+	StudentRepository repository;
+public:
+	TerminalUI(StudentRepository  repository) {
+		this->repository = repository;
+	}
+	void run() {
+		int command;
 
-	Student students[4]{
-		Student("Nastya", "Pavliuk", 19, 1),
-		Student("Mishka", "Pavliuk", 24, 5),
-		Student("Oleg", "Lukianov", 25, 5),
-		Student("Vitalina", "Lukianova", 18, 1)
-	};
+		while (true) {
+			cout << "--------------------" << endl;
+			cout << "1 - " << "Add student" << endl;
+			cout << "2 - " << "Print all students" << endl;
+			cout << "0 - " << "Exit" << endl;
+			cin >> command;
+			cout << "--------------------" << endl;
 
-	StudentRepository repository(students, 4);
-	repository.printAllStudents();
-	repository.addStudent(Student("Liza", "Tumoshko", 17, 5));
-	repository.printAllStudents();
+			if (command == 1) {
+				string name;
+				string surname;
+				int age;
+				int course;
 
-	int command;
-	while (true) {
-		cout << "--------------------" << endl;
-		cout << "1 - " << "Add student" << endl;
-		cout << "2 - " << "Print all students" << endl;
-		cout << "0 - " << "Exit" << endl;
-		cin >> command;
-		cout << "--------------------" << endl;
+				cout << "Enter student name: " << endl;
+				cin >> name;
+				cout << "Enter student surname: " << endl;
+				cin >> surname;
+				cout << "Enter student age: " << endl;
+				cin >> age;
+				cout << "Enter course: " << endl;
+				cin >> course;
 
-		if (command == 1) {
-			string name;
-			string surname;
-			int age;
-			int course;
-
-			cout << "Enter student name: " << endl;
-			cin >> name;
-			cout << "Enter student surname: " << endl;
-			cin >> surname;
-			cout << "Enter student age: " << endl;
-			cin >> age;
-			cout << "Enter course: " << endl;
-			cin >> course;
-
-			Student newStudent(name, surname, age, course);
-			repository.addStudent(newStudent);
-		}
-		else if (command == 2) {
-			repository.printAllStudents();
-		}
-		else if (command == 0) {
-			break; 
-		}
-		else {
-			cout << "Invalid option!" << endl;
+				Student newStudent(name, surname, age, course);
+				repository.addStudent(newStudent);
+			}
+			else if (command == 2) {
+				repository.printAllStudents();
+			}
+			else if (command == 0) {
+				break;
+			}
+			else {
+				cout << "Invalid option!" << endl;
+			}
 		}
 	}
+};
+
+int main() {
+	StudentRepository repository = StudentRepository();
+	TerminalUI ui = TerminalUI(repository);
+	ui.run();
+
 	return 0;
 }
