@@ -22,29 +22,40 @@ public:
 	}
 	
 	void init(double l, double w, double h, double wei, string c) {
-		if (l > 0 && l <= 15 &&
-			w>0 && w <= 15 &&
-			h>0 && h <= 15 &&
-			wei>0 && wei <= 15) {
-
+		if (l > 0 && l <= 15) {
 			this->lengh = l;
+		}
+		else {
+			this->lengh = 1;
+		}
+
+		if (w > 0 && w <= 15) {
 			this->widht = w;
+		}
+		else {
+			this->widht = 1;
+		}
+
+		if (h > 0 && h <= 15) {
 			this->heigh = h;
+		}
+		else {
+			this->heigh = 1;
+		}
+
+		if (wei > 0 && wei <= 15) {
 			this->weight = wei;
+		}
+		else {
+			this->weight = 1;
+		}
+
+		if (c == "Yellow" || c == "Blue" || c == "Green" || c == "Pink" || c == "Black") {
 			this->color = c;
 		}
 		else {
-			lengh = 1;
-			widht = 1;
-			heigh = 1;
-			weight = 1;
-			color = "Red";
+			this->color = "Red";
 		}
-
-		if (c == "Yellow" || c == "Blue" || c == "Green" || c == "Pink" || c == "Black")
-			color = c;
-		else
-			color = "Red";
 	}
 
 	void read() {
