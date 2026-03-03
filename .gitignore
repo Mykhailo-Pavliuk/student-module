@@ -50,6 +50,12 @@
 *.userosscache
 *.sln.docstates
 
+# Visual Studio project metadata (keep source files only)
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
 # Visual Studio cache/options
 .vs/
 ipch/
@@ -106,6 +112,7 @@ CMakeCache.txt
 
 *.tmp
 *.temp
+*.swp
 
 ############################
 # OS files

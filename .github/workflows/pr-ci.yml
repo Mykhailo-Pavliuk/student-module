@@ -46,7 +46,7 @@ jobs:
           fi
 
   build:
-    name: Build all Visual Studio projects
+    name: Compile all C++ sources
     runs-on: windows-latest
     needs: conventions
     steps:
@@ -55,32 +55,43 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
+      - name: Setup MSVC toolchain
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
 
-      - name: Build every solution or project
+      - name: Ensure source-only C++ project structure
         shell: pwsh
         run: |
-          $solutions = Get-ChildItem -Path . -Recurse -Filter *.sln
-          $projects  = Get-ChildItem -Path . -Recurse -Filter *.vcxproj
+          $blocked = Get-ChildItem -Path .\app,.\tasks -Recurse -File |
+            Where-Object { $_.Name -match '\.(sln|vcxproj|vcxproj\.filters|vcxproj\.user)$' }
 
-          if ($solutions.Count -eq 0 -and $projects.Count -eq 0) {
-            Write-Error "No .sln or .vcxproj files found to build."
+          if ($blocked.Count -gt 0) {
+            Write-Error "Project metadata files are not allowed. Keep only source files (e.g., .cpp) in app/ and tasks/."
+            $blocked | ForEach-Object { Write-Host $_.FullName }
             exit 1
           }
 
-          if ($solutions.Count -gt 0) {
-            foreach ($sln in $solutions) {
-              Write-Host "Building solution $($sln.FullName)"
-              msbuild $sln.FullName /p:Configuration=Release /m
-              if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-            }
+      - name: Compile every .cpp file
+        shell: pwsh
+        run: |
+          $cppFiles = Get-ChildItem -Path .\app,.\tasks -Recurse -Filter *.cpp -File
+
+          if ($cppFiles.Count -eq 0) {
+            Write-Error "No .cpp files found under app/ or tasks/."
+            exit 1
           }
 
-          if ($solutions.Count -eq 0 -and $projects.Count -gt 0) {
-            foreach ($proj in $projects) {
-              Write-Host "Building project $($proj.FullName)"
-              msbuild $proj.FullName /p:Configuration=Release /m
-              if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $outDir = Join-Path $env:RUNNER_TEMP "cpp-build"
+          New-Item -ItemType Directory -Path $outDir -Force | Out-Null
+
+          $index = 0
+          foreach ($cpp in $cppFiles) {
+            $index += 1
+            $exe = Join-Path $outDir ("program-" + $index + ".exe")
+            Write-Host "Compiling $($cpp.FullName)"
+            & cl.exe /nologo /std:c++17 /EHsc /W3 /WX- /O2 /utf-8 /Fe:$exe $cpp.FullName
+            if ($LASTEXITCODE -ne 0) {
+              exit $LASTEXITCODE
             }
           }
