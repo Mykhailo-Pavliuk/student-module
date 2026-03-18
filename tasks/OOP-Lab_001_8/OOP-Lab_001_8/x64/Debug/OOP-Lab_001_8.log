@@ -1,0 +1,5 @@
+﻿  Source.cpp
+C:\Users\pavli\student-module\tasks\OOP-Lab_001_8\Source.cpp(59,7): error C2039: 'display': is not a member of 'Para'
+      C:\Users\pavli\student-module\tasks\OOP-Lab_001_8\Source.cpp(4,7):
+      see declaration of 'Para'
+  
