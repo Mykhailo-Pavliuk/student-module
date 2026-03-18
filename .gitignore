@@ -120,3 +120,4 @@ CMakeCache.txt
 
 .DS_Store
 Thumbs.db
+tasks/**/*.cpp
