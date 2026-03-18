@@ -1,10 +1,13 @@
 #pragma once
+#include <iostream>
 #include "Student.h"
+using namespace std;
 
 class StudentRepository {
 private:
 	Student* students;
 	int size;
+
 public:
 	StudentRepository();
 	StudentRepository(Student* students, int size);

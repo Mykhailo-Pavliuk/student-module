@@ -1,6 +1,4 @@
-#include <iostream>
 #include "StudentRepository.h"
-using namespace std;
 
 StudentRepository::StudentRepository() {
 	this->students = {};

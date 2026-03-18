@@ -1,6 +1,4 @@
-#include <iostream>
 #include "TerminalUI.h"
-using namespace std;
 
 TerminalUI::TerminalUI(StudentRepository repository) {
 	this->repository = repository;
