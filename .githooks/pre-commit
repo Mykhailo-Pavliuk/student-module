@@ -1,0 +1,56 @@
+#!/bin/sh
+# Block committing Visual Studio metadata and generated build artifacts.
+
+set -e
+
+staged_paths="$(git diff --cached --name-only --diff-filter=ACMR -- app tasks)"
+
+if [ -z "$staged_paths" ]; then
+  exit 0
+fi
+
+blocked_paths_file="$(mktemp)"
+trap 'rm -f "$blocked_paths_file"' EXIT HUP INT TERM
+
+is_blocked_path() {
+  case "$1" in
+    # Project metadata: CI disallows these under app/ and tasks/.
+    *.sln|*.vcxproj|*.vcxproj.filters|*.vcxproj.user)
+      return 0
+      ;;
+    # Visual Studio caches and common C++ build artifacts.
+    */.vs/*|*/ipch/*|*/x64/*|*/x86/*|*/Debug/*|*/Release/*|\
+    *.suo|*.VC.db|*.VC.opendb|*.opendb|*.opensdf|*.sdf|*.vsidx|\
+    *.idb|*.pdb|*.ilk|*.obj|*.exe|*.dll|*.lib|*.exp|*.recipe|*.tlog|*.lastbuildstate)
+      return 0
+      ;;
+  esac
+
+  return 1
+}
+
+while IFS= read -r path; do
+  [ -z "$path" ] && continue
+
+  if is_blocked_path "$path"; then
+    printf "%s\n" "$path" >> "$blocked_paths_file"
+  fi
+done <<EOF
+$staged_paths
+EOF
+
+if [ ! -s "$blocked_paths_file" ]; then
+  exit 0
+fi
+
+echo "Commit blocked: staged files include Visual Studio metadata/build outputs." >&2
+echo "Keep only source files in app/ and tasks/." >&2
+echo >&2
+echo "Blocked paths:" >&2
+sed 's/^/  - /' "$blocked_paths_file" >&2
+echo >&2
+echo "Fix:" >&2
+echo "  1) Unstage these files: git restore --staged <path>" >&2
+echo "  2) Keep them ignored locally (already covered by .gitignore)." >&2
+
+exit 1

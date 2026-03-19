@@ -65,6 +65,9 @@ ipch/
 *.opensdf
 *.sdf
 *.cache
+*.vsidx
+*.db-wal
+*.db-shm
 
 ############################
 # IDE helpers
@@ -80,6 +83,7 @@ Debug/
 Release/
 x64/
 x86/
+obj/
 build/
 out/
 bin/
@@ -99,6 +103,11 @@ CMakeCache.txt
 *.obj
 *.pdb
 *.ilk
+*.idb
+*.exp
+*.recipe
+*.tlog
+*.lastbuildstate
 
 ############################
 # Logs
