@@ -72,7 +72,7 @@ jobs:
             exit 1
           }
 
-      - name: Compile every .cpp file
+      - name: Compile C++ sources by folder
         shell: pwsh
         run: |
           $cppFiles = Get-ChildItem -Path .\app,.\tasks -Recurse -Filter *.cpp -File
@@ -85,12 +85,20 @@ jobs:
           $outDir = Join-Path $env:RUNNER_TEMP "cpp-build"
           New-Item -ItemType Directory -Path $outDir -Force | Out-Null
 
+          $groups = $cppFiles | Group-Object DirectoryName | Sort-Object Name
+
           $index = 0
-          foreach ($cpp in $cppFiles) {
+          foreach ($group in $groups) {
             $index += 1
             $exe = Join-Path $outDir ("program-" + $index + ".exe")
-            Write-Host "Compiling $($cpp.FullName)"
-            & cl.exe /nologo /std:c++17 /EHsc /W3 /WX- /O2 /utf-8 /Fe:$exe $cpp.FullName
+
+            $sources = $group.Group | Sort-Object FullName | ForEach-Object { $_.FullName }
+            Write-Host "Compiling folder $($group.Name)"
+            foreach ($source in $sources) {
+              Write-Host "  - $source"
+            }
+
+            & cl.exe /nologo /std:c++17 /EHsc /W3 /WX- /O2 /utf-8 /Fe:$exe $sources
             if ($LASTEXITCODE -ne 0) {
               exit $LASTEXITCODE
             }
