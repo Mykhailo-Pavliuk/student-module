@@ -33,3 +33,14 @@ void StudentRepository::addStudent(Student student) {
 	students = newStudents;
 	size++;
 }
+
+void StudentRepository::findByName(string name) {
+	for (int i = 0;i < size;i++) {
+		if (students[i].getName() == name) {
+			students[i].print();
+			return;
+		}
+	}
+
+	cout << "Student not found!" << endl;
+}
