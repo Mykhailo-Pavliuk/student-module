@@ -7,6 +7,7 @@ class StudentRepository {
 private:
 	Student* students;
 	int size;
+	int studentId;
 
 public:
 	StudentRepository();

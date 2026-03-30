@@ -1,10 +1,5 @@
 #include "StudentRepository.h"
 
-StudentRepository::StudentRepository() {
-	this->students = {};
-	size = 0;
-}
-
 StudentRepository::StudentRepository(Student* students, int size) {
 	this->students = students;
 	this->size = size;
@@ -29,6 +24,10 @@ void StudentRepository::addStudent(Student student) {
 	for (int i = 0; i < size; i++) {
 		newStudents[i] = students[i];
 	}
+
+	student.setId(studentId);
+	studentId++;
+
 	newStudents[size] = student;
 	students = newStudents;
 	size++;
@@ -43,4 +42,10 @@ void StudentRepository::findByName(string name) {
 	}
 
 	cout << "Student not found!" << endl;
+}
+
+StudentRepository::StudentRepository() {
+	students = nullptr;
+	size = 0;
+	studentId = 1;
 }
