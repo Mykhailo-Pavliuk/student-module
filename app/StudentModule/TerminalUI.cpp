@@ -12,6 +12,7 @@ void TerminalUI::run() {
 		cout << "1 - " << "Add student" << endl;
 		cout << "2 - " << "Print all students" << endl;
 		cout << "3 - " << "Find student by name" << endl;
+		cout << "4 - " << "Remove student by ID" << endl;
 		cout << "0 - " << "Exit" << endl;
 		cin >> command;
 		cout << "--------------------" << endl;
@@ -37,13 +38,27 @@ void TerminalUI::run() {
 		else if (command == 2) {
 			repository.printAllStudents();
 		}
-		else if (command = 3) {
+		else if (command == 3) {
 			string name;
 			cout << "Enter name: " << endl;
 			cin >> name;
 
 			repository.findByName(name);
 		}
+
+		else if (command == 4) {
+			int id;
+			cout << "Enter student ID: " << endl;
+			cin >> id;
+
+			if (repository.removeStudentById(id)) {
+				cout << "Student removed successfully" << endl;
+			}
+			else {
+				cout << "Student not found" << endl;
+			}
+		}
+
 		else if (command == 0) {
 			break;
 		}
