@@ -19,4 +19,6 @@ public:
 	void findByName(string name);
 
 	bool removeStudentById(int id);
+
+	void sortByCourse();
 };
