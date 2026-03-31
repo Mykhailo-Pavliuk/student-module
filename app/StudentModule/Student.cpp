@@ -40,11 +40,12 @@ void Student::setCourse(int course) {
 	}
 }
 
-Student::Student(string name, string surname, int age, int course) {
+Student::Student(string name, string surname, int age, int course, int id) {
 	setName(name);
 	setSurname(surname);
 	setAge(age);
 	setCourse(course);
+	this->id = id;
 }
 
 Student::Student() {}
@@ -65,7 +66,16 @@ int Student::getCourse() {
 	return course;
 }
 
+void Student::setId(int id) {
+	this->id = id;
+}
+
+int Student::getId() {
+	return id;
+}
+
 void Student::print() {
+	cout << "Id: " << id << endl;
 	cout << "Name: " << name << endl;
 	cout << "Surname: " << surname << endl;
 	cout << "Age: " << age << " years old" << endl;

@@ -31,7 +31,7 @@ void TerminalUI::run() {
 			cout << "Enter course: " << endl;
 			cin >> course;
 
-			Student newStudent(name, surname, age, course);
+			Student newStudent(name, surname, age, course, 0);
 			repository.addStudent(newStudent);
 		}
 		else if (command == 2) {
