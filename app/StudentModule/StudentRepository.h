@@ -17,4 +17,6 @@ public:
 	void addStudent(Student student);
 
 	void findByName(string name);
+
+	bool removeStudentById(int id);
 };

@@ -49,3 +49,27 @@ StudentRepository::StudentRepository() {
 	size = 0;
 	studentId = 1;
 }
+
+bool StudentRepository::removeStudentById(int id) {
+	for (int i = 0;i < size;i++) {
+		if (students[i].getId() == id) {
+			Student* newStudents = new Student[size - 1];
+
+			int count = 0;
+
+			for (int j = 0;j < size;j++) {
+				if (students[j].getId() != id) {
+					newStudents[count] = students[j];
+					count++;
+				
+				}
+			}
+
+			students = newStudents;
+			size--;
+			
+			return true;
+		}
+	}
+	return false;
+}
