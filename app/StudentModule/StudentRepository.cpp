@@ -73,3 +73,15 @@ bool StudentRepository::removeStudentById(int id) {
 	}
 	return false;
 }
+
+void StudentRepository::sortByCourse() {
+	for (int i = 0;i < size - 1;i++) {
+		for (int j = 0;j < size - 1;j++) {
+			if (students[j].getCourse() > students[j + 1].getCourse()) {
+				Student temporary = students[j];
+				students[j] = students[j + 1];
+				students[j + 1] = temporary;
+			}
+		}
+	}
+}

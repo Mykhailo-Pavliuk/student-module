@@ -13,6 +13,7 @@ void TerminalUI::run() {
 		cout << "2 - " << "Print all students" << endl;
 		cout << "3 - " << "Find student by name" << endl;
 		cout << "4 - " << "Remove student by ID" << endl;
+		cout << "5 - " << "Sort student by course" << endl;
 		cout << "0 - " << "Exit" << endl;
 		cin >> command;
 		cout << "--------------------" << endl;
@@ -57,6 +58,12 @@ void TerminalUI::run() {
 			else {
 				cout << "Student not found" << endl;
 			}
+		}
+
+		else if (command == 5) {
+			repository.sortByCourse();
+			cout << "Student sorted by course" << endl;
+			repository.printAllStudents();
 		}
 
 		else if (command == 0) {
