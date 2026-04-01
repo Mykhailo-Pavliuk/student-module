@@ -10,6 +10,9 @@ private:
 	int course;
 	int id;
 
+	int grades[10];
+	int gradesCount;
+
 	void setName(string name);
 	void setSurname(string surname);
 	void setAge(int age);

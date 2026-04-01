@@ -46,9 +46,12 @@ Student::Student(string name, string surname, int age, int course, int id) {
 	setAge(age);
 	setCourse(course);
 	this->id = id;
+	this->gradesCount = 0;
 }
 
-Student::Student() {}
+Student::Student() {
+	this->gradesCount = 0;
+}
 
 string Student::getName() {
 	return name;
