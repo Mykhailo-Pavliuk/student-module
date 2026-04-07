@@ -11,7 +11,8 @@ private:
 	int id;
 
 	int grades[10];
-	int gradesCount;
+	int gradesCount = 0;
+	int Max_grades = 10;
 
 	void setName(string name);
 	void setSurname(string surname);
@@ -31,4 +32,6 @@ public:
 	void setId(int id);
 
 	void print();
+
+	void addGrade(int grade);
 };

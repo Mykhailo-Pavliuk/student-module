@@ -85,3 +85,17 @@ void Student::print() {
 	cout << "Course: " << course << endl;
 	cout << "-----------------" << endl;
 }
+
+void Student::addGrade(int grade) {
+	if (grade < 0 || grade > 100) {
+		cout << "Invalid grade value" << endl;
+		return;
+	}
+	if (gradesCount >= Max_grades) {
+		cout << "Maximum number of grades reached" << endl;
+		return;
+	}
+
+	grades[gradesCount] = grade;
+	gradesCount++;
+}
